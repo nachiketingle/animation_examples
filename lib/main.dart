@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
         haveOrigin: true,
         top: MediaQuery.of(context).size.height / 2,
         left: MediaQuery.of(context).size.width / 2,
-      ),
+      ), 
     );
   }
 }
