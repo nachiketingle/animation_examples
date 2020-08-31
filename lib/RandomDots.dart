@@ -13,6 +13,8 @@ class RandomDots extends StatelessWidget {
     this.left,
     this.top,
     this.backgroundColor: Colors.black,
+
+    /// Default list of colors for the dots
     this.colors: const [
       Colors.red,
       Colors.blue,
@@ -29,16 +31,16 @@ class RandomDots extends StatelessWidget {
   final Color backgroundColor;
   final List<Color> colors;
 
-
   final Random rand = Random();
-  
 
+  /// Return offset from the left
   double _getLeft(context) {
     return haveOrigin
         ? left
         : MediaQuery.of(context).size.width * rand.nextDouble();
   }
 
+  /// Return offset from the top
   double _getTop(context) {
     return haveOrigin
         ? top
@@ -57,22 +59,25 @@ class RandomDots extends StatelessWidget {
           child: Stack(
             fit: StackFit.passthrough,
             children: [
+              // Create all the Dots
               for (int i = 0; i < numOfDots; i++)
                 Dot(
-                  key: Key(i.toString()),
-                  color: colors[i % colors.length],
+                  color: colors[i % colors.length], // Assign each dot a color
                   left: _getLeft(context),
                   top: _getTop(context),
                 ),
             ],
           ),
         ),
+
+        // Ability to use a child if needed
         child == null ? Container() : child,
       ],
     );
   }
 }
 
+/// Model to represent a dot
 class Dot extends StatefulWidget {
   Dot({Key key, this.color, this.top, this.left}) : super(key: key);
   final Color color;
@@ -89,6 +94,7 @@ class _DotState extends State<Dot> {
   double size;
   Random rand;
 
+  /// Calculate a new position for the dot
   void _updatePosition() {
     left = rand.nextDouble() * MediaQuery.of(context).size.width;
     top = rand.nextDouble() * MediaQuery.of(context).size.height;
@@ -103,13 +109,14 @@ class _DotState extends State<Dot> {
     left = widget.left;
     top = widget.top;
 
+    // Used to start the initial animation
     Future.delayed(Duration(milliseconds: 10), () {
       setState(() {
-        print("Updating");
         _updatePosition();
       });
     });
 
+    // Used to continuously animate the dot
     timer = Timer.periodic(duration, (timer) {
       if (mounted) {
         setState(() {
@@ -117,6 +124,13 @@ class _DotState extends State<Dot> {
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    // Make sure to cancel timer when page has been left
+    timer.cancel();
+    super.dispose();
   }
 
   @override

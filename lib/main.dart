@@ -37,19 +37,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final Color gold = Color.fromARGB(255, 255, 215, 0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [
-        IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () {
-              setState(() {});
-            })
-      ]),
+      // Use AppBar to test refresh
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                setState(() {});
+              }),
+        ],
+      ),
+
+      // Body to show animations
       body: RandomDots(
         numOfDots: 250,
         backgroundColor: Colors.black,
@@ -57,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         haveOrigin: true,
         top: MediaQuery.of(context).size.height / 2,
         left: MediaQuery.of(context).size.width / 2,
-      ), 
+      ),
     );
   }
 }
