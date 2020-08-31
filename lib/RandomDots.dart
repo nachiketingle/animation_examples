@@ -15,12 +15,7 @@ class RandomDots extends StatelessWidget {
     this.backgroundColor: Colors.black,
 
     /// Default list of colors for the dots
-    this.colors: const [
-      Colors.red,
-      Colors.blue,
-      Colors.green,
-      Colors.yellow,
-    ],
+    this.colors: Colors.primaries,
   }) : super(key: key);
 
   final Widget child;
