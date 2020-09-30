@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'ImportAllAnimations.dart';
 
@@ -46,22 +48,46 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         actions: [
           IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () {
-                setState(() {});
-              }),
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {});
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.navigate_before),
+            onPressed: () {
+              setState(() {});
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.navigate_next),
+            onPressed: () {
+              setState(() {});
+            },
+          ),
         ],
       ),
 
       // Body to show animations
-      body: RandomDots(
+      body: Center(
+        child: ArcTimer(
+          color: gold,
+          fillColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+          seconds: 10,
+          innerRadius: 80,
+          outerRadius: 100,
+          repeat: true,
+        ),
+      ),
+
+      /*RandomDots(
         numOfDots: 250,
         backgroundColor: Colors.black,
         colors: [gold],
         haveOrigin: true,
         top: MediaQuery.of(context).size.height / 2,
         left: MediaQuery.of(context).size.width / 2,
-      ),
+      ),*/
     );
   }
 }
