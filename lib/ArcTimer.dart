@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -65,10 +66,11 @@ class _ArcTimerState extends State<ArcTimer> {
       height: widget.outerRadius * 2,
       child: CustomPaint(
         painter: ArcTimerPrinter(
-            color: widget.color,
-            radii: widget.innerRadius,
-            fillColor: widget.fillColor,
-            fraction: fraction
+          color: widget.color,
+          radii: widget.innerRadius,
+          fillColor: widget.fillColor,
+          fraction: fraction,
+          seconds: (count / 1000).ceil(),
         ),
       ),
     );
@@ -78,17 +80,18 @@ class _ArcTimerState extends State<ArcTimer> {
 
 class ArcTimerPrinter extends CustomPainter {
 
-  ArcTimerPrinter({@required this.color, @required this.radii, @required this.fillColor, this.fraction:0.5});
+  ArcTimerPrinter({@required this.color, @required this.radii, @required this.fillColor, this.fraction:0.5, this.seconds: -1});
   final Color color;
   final Color fillColor;
   final double radii;
   final double fraction;
+  final int seconds;
 
   @override
   void paint(Canvas canvas, Size size) {
     var center = Offset(size.width / 2, size.height/2);
 
-    // Rectangles
+    // Rectangles / Models
     Rect arcRect = Rect.fromCircle(center: center, radius: size.width/2);
     Rect fillRect = Rect.fromCircle(center: center, radius: radii);
 
@@ -102,6 +105,20 @@ class ArcTimerPrinter extends CustomPainter {
     // Drawing
     canvas.drawArc(arcRect, 3 * pi / 2, fraction * 2 * pi, true, arcPaint);
     canvas.drawArc(fillRect, 0, 2 * pi, true, fillPaint);
+
+    // Add time if applicable
+    if(seconds >= 0) {
+      TextStyle style = TextStyle(
+        fontSize: 50,
+      );
+      TextPainter painter = TextPainter(
+        text: TextSpan(text: seconds.toString(), style: style),
+        textDirection: TextDirection.ltr,
+        textAlign: TextAlign.center,
+      )
+      ..layout(maxWidth: size.width);
+      painter.paint(canvas, Offset(size.width/2 - 20, size.width/2 - 30));
+    }
   }
 
   @override
