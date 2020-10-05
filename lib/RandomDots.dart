@@ -18,13 +18,13 @@ class RandomDots extends StatelessWidget {
     this.colors: Colors.primaries,
   }) : super(key: key);
 
-  final Widget child;
-  final int numOfDots;
-  final bool haveOrigin;
-  final double left;
-  final double top;
-  final Color backgroundColor;
-  final List<Color> colors;
+  final Widget child;           // Child widget if wanted
+  final int numOfDots;          // Number of dots to display
+  final bool haveOrigin;        // Should the dots start in an origin
+  final double left;            // If so, this is the left value
+  final double top;             // If so, this is the top value
+  final Color backgroundColor;  // Background color
+  final List<Color> colors;     // List of potential colors for the dots
 
   final Random rand = Random();
 

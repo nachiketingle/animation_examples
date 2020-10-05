@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:animation_examples/Constants.dart';
+import 'package:animation_examples/GrowingCircles.dart';
+import 'package:animation_examples/Transitions/PageFadeTransition.dart';
 import 'package:flutter/material.dart';
 import 'ImportAllAnimations.dart';
 
@@ -39,7 +42,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Color gold = Color.fromARGB(255, 255, 215, 0);
 
   @override
   Widget build(BuildContext context) {
@@ -69,25 +71,94 @@ class _HomePageState extends State<HomePage> {
       ),
 
       // Body to show animations
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          heightFactor: 1,
+          child: Wrap(
+            alignment: WrapAlignment.start,
+            spacing: 10,
+            children: [
+              PageButton(RandomDotsPage(), "Random Dots"),
+              PageButton(ArcTimerPage(), "Arc Timer"),
+              PageButton(GrowingCirclesPage(), "Growing Circles"),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PageButton extends StatelessWidget{
+  PageButton(this.page, this.text);
+  final Widget page;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, PageFadeTransition(page: page));
+      },
+      child: Container(
+        width: 150,
+        height: 150,
+        child: Card(
+          child: Center(child: Text(text, style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
+        ),
+      ),
+    );
+  }
+}
+
+class RandomDotsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Random Dots"),),
+      body: RandomDots(
+        numOfDots: 250,
+        backgroundColor: Colors.black,
+        colors: [ColorConstants.gold],
+        haveOrigin: true,
+        top: MediaQuery.of(context).size.height / 2,
+        left: MediaQuery.of(context).size.width / 2,
+      ),
+    );
+  }
+}
+
+class ArcTimerPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Arc Timer"),),
       body: Center(
+        heightFactor: 2,
         child: ArcTimer(
-          color: gold,
+          color: ColorConstants.gold,
           fillColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
           seconds: 10,
           innerRadius: 80,
           outerRadius: 100,
           repeat: true,
+          textStyle: TextStyle(
+              fontSize: 50,
+              color: Colors.black
+          ),
         ),
       ),
+    );
+  }
+}
 
-      /*RandomDots(
-        numOfDots: 250,
-        backgroundColor: Colors.black,
-        colors: [gold],
-        haveOrigin: true,
-        top: MediaQuery.of(context).size.height / 2,
-        left: MediaQuery.of(context).size.width / 2,
-      ),*/
+class GrowingCirclesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text("Growing Circles"),),
+        body: GrowingCircles(colors: Colors.primaries,)
     );
   }
 }
