@@ -97,14 +97,14 @@ class PageButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(context, PageFadeTransition(page: page));
-      },
-      child: Container(
-        width: 150,
-        height: 150,
-        child: Card(
+    return Container(
+      width: 150,
+      height: 150,
+      child: Card(
+        child: InkWell(
+          onTap: () {
+            Navigator.push(context, PageFadeTransition(page: page));
+          },
           child: Center(child: Text(text, style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
         ),
       ),
@@ -116,7 +116,12 @@ class RandomDotsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Random Dots"),),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text("Random Dots"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: RandomDots(
         numOfDots: 250,
         backgroundColor: Colors.black,
