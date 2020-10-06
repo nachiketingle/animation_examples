@@ -14,6 +14,7 @@ class ArcTimer extends StatefulWidget {
     this.seconds:60,
     this.repeat,
     this.textStyle,
+    this.onFinish,
   }) : super(key: key);
 
   final Color color;          // Color of the arc
@@ -23,6 +24,7 @@ class ArcTimer extends StatefulWidget {
   final double seconds;       // Number of seconds the timer runs for
   final bool repeat;          // Whether the timer should repeat
   final TextStyle textStyle;  // Text style for the display of the seconds
+  final Function(Timer timer) onFinish;
 
   _ArcTimerState createState() => _ArcTimerState();
 }
@@ -57,6 +59,7 @@ class _ArcTimerState extends State<ArcTimer> {
     }
     if(count <= 0) {
       widget.repeat ? reset() : timer.cancel();
+      widget.onFinish.call(timer);
     }
 
   }
