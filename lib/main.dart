@@ -135,23 +135,61 @@ class RandomDotsPage extends StatelessWidget {
 }
 
 class ArcTimerPage extends StatelessWidget {
+
+  AnimationController controller;
+
   @override
   Widget build(BuildContext context) {
+    print("Sup");
     return Scaffold(
-      appBar: AppBar(title: Text("Arc Timer"),),
+      appBar: AppBar(
+        title: Text("Arc Timer"),
+      ),
       body: Center(
-        heightFactor: 2,
-        child: ArcTimer(
-          color: ColorConstants.gold,
-          fillColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
-          seconds: 10,
-          innerRadius: 80,
-          outerRadius: 100,
-          repeat: true,
-          textStyle: TextStyle(
-              fontSize: 50,
-              color: Colors.black
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ArcTimer(
+              color: ColorConstants.gold,
+              fillColor: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+              seconds: 5,
+              innerRadius: 80,
+              outerRadius: 100,
+              startASAP: true,
+              textStyle: TextStyle(
+                  fontSize: 50,
+                  color: Colors.black
+              ),
+              getController: (animationController) => controller = animationController,
+              onFinish: (controller) {
+                print("Finished");
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                RaisedButton(
+                  child: Text("Stop"),
+                  onPressed: () {
+                    controller.stop();
+                  },
+                ),
+                RaisedButton(
+                  child: Text("Start"),
+                  onPressed: () {
+                    controller.forward();
+                  },
+                ),
+                RaisedButton(
+                  child: Text("Reset"),
+                  onPressed: () {
+                    controller.reset();
+                    controller.forward();
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
