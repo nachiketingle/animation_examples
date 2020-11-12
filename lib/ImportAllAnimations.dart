@@ -1,2 +1,2 @@
 export 'RandomDots.dart';
-export 'ArcTimer.dart';
+export 'ArcTimer/ArcTimer.dart';

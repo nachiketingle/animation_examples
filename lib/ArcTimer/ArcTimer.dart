@@ -46,7 +46,7 @@ class _ArcTimerState extends State<ArcTimer> with SingleTickerProviderStateMixin
     // Animation driver
     controller.addListener(() {
       setState(() {
-        fraction=1 - (lerpDouble(0, initialCount, controller.value) / initialCount);
+        fraction = 1 - (lerpDouble(0, initialCount, controller.value) / initialCount);
       });
     });
 
