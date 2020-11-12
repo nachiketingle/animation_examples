@@ -13,7 +13,6 @@ class ArcTimerPage extends StatelessWidget {
   // A random fill color
   final Color fillColor = Colors.primaries[Random().nextInt(Colors.primaries.length)];
 
-
   @override
   Widget build(BuildContext context) {
     print("Rebuilding everything");

@@ -1,8 +1,4 @@
-import 'dart:math';
-
-import 'package:animation_examples/ArcTimer/arc_timer_page.dart';
 import 'package:animation_examples/Constants.dart';
-import 'package:animation_examples/GrowingCircles.dart';
 import 'package:animation_examples/Transitions/PageFadeTransition.dart';
 import 'package:flutter/material.dart';
 import 'ImportAllAnimations.dart';
@@ -18,19 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(),
@@ -106,7 +90,13 @@ class PageButton extends StatelessWidget{
           onTap: () {
             Navigator.push(context, PageFadeTransition(page: page));
           },
-          child: Center(child: Text(text, style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
       ),
     );
@@ -116,6 +106,7 @@ class PageButton extends StatelessWidget{
 class RandomDotsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -128,8 +119,8 @@ class RandomDotsPage extends StatelessWidget {
         backgroundColor: Colors.black,
         colors: [ColorConstants.gold],
         haveOrigin: true,
-        top: MediaQuery.of(context).size.height / 2,
-        left: MediaQuery.of(context).size.width / 2,
+        top: size.height / 2,
+        left: size.width / 2,
       ),
     );
   }

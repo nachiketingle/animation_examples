@@ -9,7 +9,7 @@ class ArcTimerController {
   bool repeatOnFinish;
   ArcTimerController({this.startASAP: false, this.repeatOnFinish: false});
 
-  void initValues({TickerProvider vsync, int initialCount, Function onFinish}) {
+  void initValues({@required TickerProvider vsync, @required int initialCount, Function onFinish}) {
     _controller = AnimationController(
       vsync: vsync,
       duration: Duration(milliseconds: initialCount),

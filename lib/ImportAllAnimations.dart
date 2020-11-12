@@ -1,2 +1,3 @@
 export 'RandomDots.dart';
-export 'ArcTimer/arc_timer.dart';
+export 'ArcTimer/arc_timer_page.dart';
+export 'GrowingCircles.dart';
