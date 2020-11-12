@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:animation_examples/ArcTimer/arc_timer_controller.dart';
+import 'package:animation_examples/ArcTimer/timer_controller.dart';
 import 'package:flutter/material.dart';
 
-export 'arc_timer_controller.dart';
+export 'timer_controller.dart';
 
 class ArcTimer extends StatefulWidget {
   ArcTimer({
@@ -28,7 +28,7 @@ class ArcTimer extends StatefulWidget {
   final bool startASAP;       // Whether we should start timer immediately
   final TextStyle textStyle;  // Text style for the display of the seconds
   final Function onFinish;        // Callback when timer hits 0
-  final ArcTimerController arcTimerController;  // Controller for the timer
+  final TimerController arcTimerController;   // Controller for the timer
 
   _ArcTimerState createState() => _ArcTimerState();
 }
@@ -37,13 +37,13 @@ class _ArcTimerState extends State<ArcTimer> with SingleTickerProviderStateMixin
   final int updateCycle = 10;     // Number of milliseconds between screen refresh
   int initialCount;               // Number of seconds per cycle
   double fraction = 1;            // Fraction of circle that arc should go to
-  ArcTimerController controller;  // Controller driving the arctimer animation
+  TimerController controller;   // Controller driving the arctimer animation
 
   /// Setup controller
   void controllerSetup() {
     // Initialize our controller
     controller = widget.arcTimerController == null ?
-      ArcTimerController() : widget.arcTimerController;
+      TimerController() : widget.arcTimerController;
 
     // Initialize the controller values
     controller.initValues(

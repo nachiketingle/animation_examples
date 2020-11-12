@@ -8,7 +8,7 @@ import 'package:animation_examples/Constants.dart';
 class ArcTimerPage extends StatelessWidget {
 
   // Use the ArcTimerContoller to control the timer
-  final ArcTimerController controller = ArcTimerController(startASAP: false, repeatOnFinish: true);
+  final TimerController controller = TimerController(startASAP: false, repeatOnFinish: true);
 
   // A random fill color
   final Color fillColor = Colors.primaries[Random().nextInt(Colors.primaries.length)];
@@ -52,7 +52,7 @@ class ArcTimerPage extends StatelessWidget {
 
 /// The buttons used to control the timer using the [ArcTimerController]
 class ControlButtons extends StatelessWidget {
-  final ArcTimerController controller;
+  final TimerController controller;
 
   ControlButtons(this.controller);
 
