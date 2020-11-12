@@ -1,7 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:animation_examples/ArcTimer/arc_timer_controller.dart';
 import 'package:flutter/material.dart';
+
+export 'arc_timer_controller.dart';
 
 class ArcTimer extends StatefulWidget {
   ArcTimer({
@@ -14,7 +17,7 @@ class ArcTimer extends StatefulWidget {
     this.startASAP:false,
     this.textStyle,
     this.onFinish,
-    this.getController,
+    this.arcTimerController
   }) : super(key: key);
 
   final Color color;          // Color of the arc
@@ -24,8 +27,8 @@ class ArcTimer extends StatefulWidget {
   final double seconds;       // Number of seconds the timer runs for
   final bool startASAP;       // Whether we should start timer immediately
   final TextStyle textStyle;  // Text style for the display of the seconds
-  final Function(AnimationController controller) onFinish;        // Callback when timer hits 0
-  final Function(AnimationController controller) getController;   // Returns an instance of the controller
+  final Function onFinish;        // Callback when timer hits 0
+  final ArcTimerController arcTimerController;  // Controller for the timer
 
   _ArcTimerState createState() => _ArcTimerState();
 }
@@ -33,14 +36,20 @@ class ArcTimer extends StatefulWidget {
 class _ArcTimerState extends State<ArcTimer> with SingleTickerProviderStateMixin{
   final int updateCycle = 10;     // Number of milliseconds between screen refresh
   int initialCount;               // Number of seconds per cycle
-  double fraction = 0;            // Fraction of circle that arc should go to
-  AnimationController controller; // Controller driving the arctimer animation
+  double fraction = 1;            // Fraction of circle that arc should go to
+  ArcTimerController controller;  // Controller driving the arctimer animation
 
+  /// Setup controller
   void controllerSetup() {
-    controller = AnimationController(
+    // Initialize our controller
+    controller = widget.arcTimerController == null ?
+      ArcTimerController() : widget.arcTimerController;
+
+    // Initialize the controller values
+    controller.initValues(
       vsync: this,
-      duration: Duration(milliseconds: initialCount),
-      value: 0,
+      initialCount: initialCount,
+      onFinish: widget.onFinish
     );
 
     // Animation driver
@@ -49,20 +58,6 @@ class _ArcTimerState extends State<ArcTimer> with SingleTickerProviderStateMixin
         fraction = 1 - (lerpDouble(0, initialCount, controller.value) / initialCount);
       });
     });
-
-    // Notify parent when timer reaches 0
-    controller.addStatusListener((status) {
-      if(status == AnimationStatus.completed) {
-        if(widget.onFinish != null) {
-          widget.onFinish.call(controller);
-        }
-      }
-    });
-
-    // Start immediately if needed
-    if(widget.startASAP) {
-      controller.forward();
-    }
 
   }
 
@@ -75,11 +70,6 @@ class _ArcTimerState extends State<ArcTimer> with SingleTickerProviderStateMixin
 
     // Setup our controller
     controllerSetup();
-
-    // Return the controller if needed
-    if(widget.getController != null) {
-      widget.getController.call(controller);
-    }
 
   }
 
@@ -95,7 +85,7 @@ class _ArcTimerState extends State<ArcTimer> with SingleTickerProviderStateMixin
       width: widget.outerRadius * 2,
       height: widget.outerRadius * 2,
       child: CustomPaint(
-        painter: ArcTimerPainter(
+        painter: _ArcTimerPainter(
           color: widget.color,
           radii: widget.innerRadius,
           fillColor: widget.fillColor,
@@ -110,9 +100,9 @@ class _ArcTimerState extends State<ArcTimer> with SingleTickerProviderStateMixin
 }
 
 /// Used to paint the timer
-class ArcTimerPainter extends CustomPainter {
+class _ArcTimerPainter extends CustomPainter {
 
-  ArcTimerPainter({
+  _ArcTimerPainter({
     @required this.color,
     @required this.radii,
     @required this.fillColor,
@@ -120,10 +110,18 @@ class ArcTimerPainter extends CustomPainter {
     this.fraction:0.5,
     this.seconds: -1
   });
+
+  /// Color of the arc of the timer.
   final Color color;
+
+  /// Color of the inner circle.
   final Color fillColor;
   final double radii;
+
+  /// Current fraction of circle that arc should sweep
   final double fraction;
+
+  /// Value to display
   final int seconds;
   final TextStyle textStyle;
 
@@ -144,7 +142,7 @@ class ArcTimerPainter extends CustomPainter {
       ..color = fillColor;
 
     // Drawing
-    canvas.drawArc(arcRect, 3 * pi / 2, fraction * 2 * pi, false, arcPaint);
+    canvas.drawArc(arcRect, 3 * pi / 2, -fraction * 2 * pi, false, arcPaint);
     canvas.drawArc(fillRect, 0, 2 * pi, true, fillPaint);
 
     // Add time if applicable
