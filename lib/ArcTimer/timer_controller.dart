@@ -14,7 +14,7 @@ class TimerController {
     _controller = AnimationController(
       vsync: vsync,
       duration: Duration(milliseconds: initialCount),
-      value: 0
+      value: 0,
     );
 
     // Notify parent when timer reaches 0
@@ -62,5 +62,9 @@ class TimerController {
     if(startAgain) {
       _controller.forward();
     }
+  }
+
+  void setDuration(Duration duration) {
+    _controller.duration = duration;
   }
 }
