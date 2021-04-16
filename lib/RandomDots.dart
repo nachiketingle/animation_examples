@@ -12,6 +12,7 @@ class RandomDots extends StatelessWidget {
     this.haveOrigin: false,
     this.left,
     this.top,
+    this.opacity: 0.75,
     this.backgroundColor: Colors.black,
 
     /// Default list of colors for the dots
@@ -23,6 +24,7 @@ class RandomDots extends StatelessWidget {
   final bool haveOrigin;        // Should the dots start in an origin
   final double left;            // If so, this is the left value
   final double top;             // If so, this is the top value
+  final double opacity;         // Opacity of the dots
   final Color backgroundColor;  // Background color
   final List<Color> colors;     // List of potential colors for the dots
 
@@ -50,7 +52,7 @@ class RandomDots extends StatelessWidget {
           color: backgroundColor,
         ),
         Opacity(
-          opacity: 0.75,
+          opacity: opacity,
           child: Stack(
             fit: StackFit.passthrough,
             children: [
@@ -100,7 +102,7 @@ class _DotState extends State<Dot> {
     super.initState();
     rand = Random();
     size = 5 + rand.nextDouble() * 4 - 2;
-    duration = Duration(milliseconds: 10000 + rand.nextInt(500) - 250);
+    duration = Duration(milliseconds: 20000 + rand.nextInt(500) - 250);
     left = widget.left;
     top = widget.top;
 

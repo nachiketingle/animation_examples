@@ -114,13 +114,52 @@ class RandomDotsPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: RandomDots(
-        numOfDots: 250,
-        backgroundColor: Colors.black,
-        colors: [ColorConstants.gold],
-        haveOrigin: true,
-        top: size.height / 2,
-        left: size.width / 2,
+      body: Stack(
+        children: [
+          RandomDots(
+            numOfDots: 250,
+            backgroundColor: Colors.white,
+            colors: [ColorConstants.gold, Colors.black],
+            opacity: 0.25,
+            haveOrigin: true,
+            top: size.height / 2,
+            left: size.width / 2,
+          ),
+          Align(
+            alignment: Alignment(0, -0.66),
+            child: RichText(
+              text: TextSpan(
+                  style: TextStyle(fontSize: 40, color: Colors.black, fontWeight: FontWeight.bold),
+                  children: [
+                    TextSpan(text: "S", style: TextStyle(fontSize: 55), ),
+                    TextSpan(text: "AFEWALK")
+                  ]
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment(0, 0.5),
+            child: RaisedButton(
+              color: ColorConstants.gold,
+              child: Text("Purdue Account Login"),
+              onPressed: (){
+                print("Pressed");
+              },
+            ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 10,
+            child: IconButton(
+              color: ColorConstants.gold,
+              icon: Icon(Icons.info_sharp),
+              iconSize: 30,
+              onPressed: () {
+                print("Info pressed");
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
