@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage> {
               PageButton(RandomDotsPage(), "Random Dots"),
               PageButton(ArcTimerPage(), "Arc Timer"),
               PageButton(GrowingCirclesPage(), "Growing Circles"),
+              PageButton(ModalSheetExample(), "Modal Sheet"),
             ],
           ),
         ),
