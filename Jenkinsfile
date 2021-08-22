@@ -1,9 +1,9 @@
 pipeline {
-    agent { docker { image 'node:14-alpine' } }
+    agent { docker { image 'openpriv/flutter-desktop:windows-sdk30-fdev2.5rc' } }
     stages {
         stage('build') {
             steps {
-                sh 'npm --version'
+                sh 'flutter version'
             }
         }
     }
