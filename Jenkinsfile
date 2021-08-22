@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'openpriv/flutter-desktop:windows-sdk30-fdev2.5rc' } }
+    agent { docker { image 'openpriv/flutter-desktop:linux-dev' } }
     stages {
         stage('build') {
             steps {
