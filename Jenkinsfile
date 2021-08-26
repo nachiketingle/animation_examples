@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'flutter doctor'
+                sh 'echo hi!'
             }
         }
     }
